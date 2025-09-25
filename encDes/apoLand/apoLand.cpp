@@ -1,13 +1,6 @@
-﻿// apoLand.cpp : Defines the entry point for the application.
-//
-
-#include "apoLand.h"
-
-using namespace std;
-
-/*************************************************************
+﻿/*************************************************************
  * 1. Name:
- *      -your name-
+ *      Zach Nelson, Jay Underwood, Josh Palmer
  * 2. Assignment Name:
  *      Practice 02: Physics simulator
  * 3. Assignment Description:
@@ -19,6 +12,7 @@ using namespace std;
  **************************************************************/
 
 #include <iostream>  // for CIN and COUT
+#include <cmath>
 using namespace std;
 
 #define WEIGHT   15103.000   // Weight in KG
@@ -38,120 +32,148 @@ using namespace std;
  * OUTPUT
  *     s : new position, in meters
  **************************************************/
+double computeDistance(double s, double v, double a, double t)
+{
+    return s = s + (v * t) + (0.5 * a * t * t);
+}
+
+/**************************************************
+ * COMPUTE ACCELERATION
+ * Find the acceleration given a thrust and mass.
+ * This will be done using Newton's second law of motion:
+ *     f = m * a
+ * INPUT
+ *     f : force, in Newtons (kg * m / s^2)
+ *     m : mass, in kilograms
+ * OUTPUT
+ *     a : acceleration, in meters/second^2
+ ***************************************************/
+double computeAcceleration(double f, double m)
+{
+    double a = f / m;
+    return a;
+}
+
+/***********************************************
+ * COMPUTE VELOCITY
+ * Starting with a given velocity, find the new
+ * velocity once acceleration is applied. This is
+ * called the Kinematics equation. The
+ * equation is:
+ *     v = v + a t
+ * INPUT
+ *     v : velocity, in meters/second
+ *     a : acceleration, in meters/second^2
+ *     t : time, in seconds
+ * OUTPUT
+ *     v : new velocity, in meters/second
+ ***********************************************/
+double computeVelocity(double v, double a, double t)
+{
+    return v = v + (a * t);
+}
+
+/***********************************************
+ * COMPUTE VERTICAL COMPONENT
+ * Find the vertical component of a velocity or acceleration.
+ * The equation is:
+ *     cos(a) = y / total
+ * This can be expressed graphically:
+ *      x
+ *    +-----
+ *    |   /
+ *  y |  / total
+ *    |a/
+ *    |/
+ * INPUT
+ *     a : angle, in radians
+ *     total : total velocity or acceleration
+ * OUTPUT
+ *     y : the vertical component of the total
+ ***********************************************/
+double computeVerticalComponent(double a, double total)
+{
+    double y;
+    y = cos(a) * total;
+    return y;
+}
+
+/***********************************************
+ * COMPUTE HORIZONTAL COMPONENT
+ * Find the horizontal component of a velocity or acceleration.
+ * The equation is:
+ *     sin(a) = x / total
+ * This can be expressed graphically:
+ *      x
+ *    +-----
+ *    |   /
+ *  y |  / total
+ *    |a/
+ *    |/
+ * INPUT
+ *     a : angle, in radians
+ *     total : total velocity or acceleration
+ * OUTPUT
+ *     x : the vertical component of the total
+ ***********************************************/
+double computeHorizontalComponent(double a, double total)
+{
+    double x;
+    x = sin(a) * total;
+    return x;
+}
+
+/************************************************
+ * COMPUTE TOTAL COMPONENT
+ * Given the horizontal and vertical components of
+ * something (velocity or acceleration), determine
+ * the total component. To do this, use the Pythagorean Theorem:
+ *    x^2 + y^2 = t^2
+ * where:
+ *      x
+ *    +-----
+ *    |   /
+ *  y |  / total
+ *    | /
+ *    |/
+ * INPUT
+ *    x : horizontal component
+ *    y : vertical component
+ * OUTPUT
+ *    total : total component
+ ***********************************************/
+double computeTotalComponent(double x, double y)
+{
+    double total;
+    total = sqrt((x * x) + (y * y));
+    return total;
+}
+
+
+/*************************************************
+ * RADIANS FROM DEGEES
+ * Convert degrees to radians:
+ *     radians / 2pi = degrees / 360
+ * INPUT
+ *     d : degrees from 0 to 360
+ * OUTPUT
+ *     r : radians from 0 to 2pi
+ **************************************************/
  // your function goes here
+double toradians(double degrees) {
+    const double PI = 3.14159265358979323846;
+    return (degrees * 2 * PI) / 360.0;
+}
 
- /**************************************************
-  * COMPUTE ACCELERATION
-  * Find the acceleration given a thrust and mass.
-  * This will be done using Newton's second law of motion:
-  *     f = m * a
-  * INPUT
-  *     f : force, in Newtons (kg * m / s^2)
-  *     m : mass, in kilograms
-  * OUTPUT
-  *     a : acceleration, in meters/second^2
-  ***************************************************/
-  // your function goes here
-
-  /***********************************************
-   * COMPUTE VELOCITY
-   * Starting with a given velocity, find the new
-   * velocity once acceleration is applied. This is
-   * called the Kinematics equation. The
-   * equation is:
-   *     v = v + a t
-   * INPUT
-   *     v : velocity, in meters/second
-   *     a : acceleration, in meters/second^2
-   *     t : time, in seconds
-   * OUTPUT
-   *     v : new velocity, in meters/second
-   ***********************************************/
-   // your function goes here
-
-
-   /***********************************************
-    * COMPUTE VERTICAL COMPONENT
-    * Find the vertical component of a velocity or acceleration.
-    * The equation is:
-    *     cos(a) = y / total
-    * This can be expressed graphically:
-    *      x
-    *    +-----
-    *    |   /
-    *  y |  / total
-    *    |a/
-    *    |/
-    * INPUT
-    *     a : angle, in radians
-    *     total : total velocity or acceleration
-    * OUTPUT
-    *     y : the vertical component of the total
-    ***********************************************/
-    // your function goes here
-
-    /***********************************************
-     * COMPUTE HORIZONTAL COMPONENT
-     * Find the horizontal component of a velocity or acceleration.
-     * The equation is:
-     *     sin(a) = x / total
-     * This can be expressed graphically:
-     *      x
-     *    +-----
-     *    |   /
-     *  y |  / total
-     *    |a/
-     *    |/
-     * INPUT
-     *     a : angle, in radians
-     *     total : total velocity or acceleration
-     * OUTPUT
-     *     x : the vertical component of the total
-     ***********************************************/
-     // your function goes here
-
-     /************************************************
-      * COMPUTE TOTAL COMPONENT
-      * Given the horizontal and vertical components of
-      * something (velocity or acceleration), determine
-      * the total component. To do this, use the Pythagorean Theorem:
-      *    x^2 + y^2 = t^2
-      * where:
-      *      x
-      *    +-----
-      *    |   /
-      *  y |  / total
-      *    | /
-      *    |/
-      * INPUT
-      *    x : horizontal component
-      *    y : vertical component
-      * OUTPUT
-      *    total : total component
-      ***********************************************/
-      // your function goes here
-
-
-      /*************************************************
-       * RADIANS FROM DEGEES
-       * Convert degrees to radians:
-       *     radians / 2pi = degrees / 360
-       * INPUT
-       *     d : degrees from 0 to 360
-       * OUTPUT
-       *     r : radians from 0 to 2pi
-       **************************************************/
-       // your function goes here
-
-       /**************************************************
-        * PROMPT
-        * A generic function to prompt the user for a double
-        * INPUT
-        *      message : the message to display to the user
-        * OUTPUT
-        *      response : the user's response
-        ***************************************************/
-        // your function goes here
+/**************************************************
+ * PROMPT
+ * A generic function to prompt the user for a double
+ * INPUT
+ *      message : the message to display to the user
+ * OUTPUT
+ *      response : the user's response
+ ***************************************************/
+ // your function goes here
 double prompt(const char* question) {
     double response;
     cout << question;
@@ -165,8 +187,6 @@ double prompt(const char* question) {
  ****************************************************************/
 int main()
 {
-
-    cout << "Welcome to the Apollo Lander simulator!\n\n";
     // Prompt for input and variables to be computed
     double dx = prompt("What is your horizontal velocity (m/s)? ");
     double dy = prompt("What is your vertical velocity (m/s)? ");
@@ -183,16 +203,28 @@ int main()
     double v;                   // Total velocity
 
     // Go through the simulator five times
-      // your code goes here
-      // Hint: Update the position _before_ updating the velocity
+    // your code goes here
+    // Hint: Update the position _before_ updating the velocity
+    for (int i = 0; i < 5; i++) {
+        aRadians = toradians(aDegrees);
+        accelerationThrust = computeAcceleration(THRUST, WEIGHT);
+        ddxThrust = computeHorizontalComponent(aRadians, accelerationThrust);
+        ddyThrust = computeVerticalComponent(aRadians, accelerationThrust);
+        ddx = ddxThrust;
+        ddy = ddyThrust + GRAVITY;
+        x = computeDistance(x, dx, ddx, t);
+        y = computeDistance(y, dy, ddy, t);
+        dx = computeVelocity(dx, ddx, t);
+        dy = computeVelocity(dy, ddy, t);
+        v = computeTotalComponent(dx, dy);
 
-      // Output
-    cout.setf(ios::fixed | ios::showpoint);
-    cout.precision(2);
-    cout << "\tNew position:   (" << x << ", " << y << ")m\n";
-    cout << "\tNew velocity:   (" << dx << ", " << dy << ")m/s\n";
-    cout << "\tTotal velocity:  " << v << "m/s\n\n";
+        // Output
+        cout.setf(ios::fixed | ios::showpoint);
+        cout.precision(2);
+        cout << "\tNew position:   (" << x << ", " << y << ")m\n";
+        cout << "\tNew velocity:   (" << dx << ", " << dy << ")m/s\n";
+        cout << "\tTotal velocity:  " << v << "m/s\n\n";
 
-
+    }
     return 0;
 }
