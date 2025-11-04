@@ -1,1 +1,0 @@
-[insert dipper chat here]

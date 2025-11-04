@@ -1,3 +1,0 @@
-"""
-[insert competentsee prompt here]
-"""
