@@ -5,7 +5,7 @@ defmodule ChatRoom.Room do
 
   use GenServer
 
-  ## PUBLIC API
+  ## public api
 
   def start_link(name) do
     GenServer.start_link(__MODULE__, %{name: name}, name: ChatRoom.Registry.via(name))
@@ -23,7 +23,7 @@ defmodule ChatRoom.Room do
     GenServer.call(ChatRoom.Registry.via(room), :history)
   end
 
-  ## SERVER CALLBACKS
+  ## server callbacks
 
   def init(state) do
     {:ok, Map.merge(state, %{members: MapSet.new(), messages: []})}
