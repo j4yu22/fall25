@@ -21,3 +21,5 @@ chat_room-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+../../encDes/apollo-lander-source
